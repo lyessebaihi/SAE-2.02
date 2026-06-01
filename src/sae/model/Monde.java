@@ -201,6 +201,13 @@ public class Monde {
     public void jouerTour() {
         tourActuel++;
     }
+    public ArrayList<Mine> getMines(){
+        return mines;
+    }
+    
+public ArrayList<Entrepot> getEntrepot(){
+    return entrepots;}
+
     public int getTourActuel() {
         return tourActuel;
     }
