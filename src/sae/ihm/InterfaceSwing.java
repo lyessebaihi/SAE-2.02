@@ -24,6 +24,7 @@ public class InterfaceSwing extends JFrame {
     private Robot robot1, robot2, robotChoisi;
     private Mine mine1, mine2;
     private Entrepot entrepot1, entrepot2;
+    private PlanificateurRobot planificateur;
 
     private JLabel[][] cases = new JLabel[20][20];
     private JTextArea infos = new JTextArea();
@@ -37,6 +38,7 @@ public class InterfaceSwing extends JFrame {
 
         monde = new Monde();
         creerMonde();
+        planificateur = new PlanificateurRobot(monde);
 
         setTitle("SAE Robots Mineurs");
         setSize(1100, 750);
@@ -129,6 +131,7 @@ public class InterfaceSwing extends JFrame {
 
         JButton recolter = new JButton("Récolter");
         JButton deposer = new JButton("Déposer");
+        JButton tourAutomatique = new JButton("Tour automatique");
 
         haut.addActionListener(e -> action("NORD"));
         bas.addActionListener(e -> action("SUD"));
@@ -136,6 +139,17 @@ public class InterfaceSwing extends JFrame {
         droite.addActionListener(e -> action("EST"));
         recolter.addActionListener(e -> action("RECOLTER"));
         deposer.addActionListener(e -> action("DEPOSER"));
+        tourAutomatique.addActionListener(e -> {
+    planificateur.jouerTousLesRobots();
+
+    afficherGrille();
+    afficherInfos();
+
+    if (mine1.estVide() && mine2.estVide()
+            && robot1.estVide() && robot2.estVide()) {
+        JOptionPane.showMessageDialog(this, "Fin : toutes les mines sont vides.");
+    }
+});
 
         commandes.add(new JLabel("Robot choisi"));
         commandes.add(boutonR1);
@@ -148,6 +162,8 @@ public class InterfaceSwing extends JFrame {
         commandes.add(Box.createVerticalStrut(20));
         commandes.add(recolter);
         commandes.add(deposer);
+        commandes.add(Box.createVerticalStrut(20));
+        commandes.add(tourAutomatique);
 
         return commandes;
     }
