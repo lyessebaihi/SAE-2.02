@@ -21,11 +21,18 @@ public class PlanificateurRobot {
     }
 
     public void jouerRobot(Robot robot) {
+        Mine mineDisponible = choisirMine(robot);
+        
         if (robot.estPlein()) {
             allerVersEntrepot(robot);
-        } else {
+        } 
+        else if (mineDisponible != null) {
             allerVersMine(robot);
         }
+        else if (robot.getStockActuel() > 0) {
+            allerVersEntrepot(robot);
+        }
+        
     }
 
     private void allerVersMine(Robot robot) {
